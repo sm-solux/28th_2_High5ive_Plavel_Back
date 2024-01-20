@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Signup</title>
+</head>
+<body>
+    <h2>회원가입</h2>
+    <form method="post">
+        {% csrf_token %}
+        <!-- <div>
+            <label for="id_id">ID:</label>
+            <input type="text" name="id" required id="id_id">
+        </div> -->
+        <div>
+            <label for="id_email">이메일 </label>
+            <input type="email" name="email" required id="id_email">
+        </div>
+        <div>
+            <label for="id_pwd">비밀번호 </label>
+            <input type="password" name="pwd" required id="id_pwd">
+        </div>
+        <div>
+            <label for="id_pwd2">비밀번호 확인 </label>
+            <input type="password" name="pwd2" required id="id_pwd2">
+        </div>
+        <div>
+            <label for="id_name">이름 </label>
+            <input type="text" name="name" required id="id_name">
+        </div>
+        <div>
+            <input type="submit" value="회원가입 완료">
+        </div>
+    </form>
+    {% for message in messages %}
+        <p>{{ message }}</p>
+    {% endfor %}
+</body>
+</html>
+
+<!-- 나머지 입력요소들은 db에 저장하지 않아도 충분히 식별가능하기 때문에
+나중에 프론트랑 합칠때 코드만 넣는걸로. -->

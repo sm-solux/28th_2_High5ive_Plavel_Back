@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+</head>
+<body>
+    <h2>로그인</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div>
+            <label for="id_email">이메일 </label>
+            <input type="text" name="email" required id="id_email">
+        </div>
+        <div>
+            <label for="id_pwd">비밀번호 </label>
+            <input type="password" name="pwd" required id="id_pwd">
+        </div>
+        <div>
+            <input type="submit" value="Login">
+        </div>
+    </form>
+    {% for message in messages %}
+        <p>{{ message }}</p>
+    {% endfor %}
+</body>
+</html>
