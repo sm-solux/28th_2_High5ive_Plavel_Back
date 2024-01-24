@@ -11,6 +11,10 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)                                      # 작성일
     updated_at = models.DateTimeField(auto_now=True)                                          # 수정일
 
+    class Meta:
+        # 최신 게시글이 위에 오도록
+        ordering = ['-created_at']
+
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
     author = models.ForeignKey(User, on_delete=models.CASCADE)
