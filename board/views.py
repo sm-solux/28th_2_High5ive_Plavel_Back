@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post, Comment
 from .forms import CommentForm, PostForm
+from django.http import HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
 
 # 글 보기(조회)
@@ -50,8 +51,11 @@ def post_create(request):
 #     return render(request, 'post_create.html')
 
 # 수정
+@login_required
 def post_edit(request, post_id):
     post = get_object_or_404(Post, id=post_id)
+    if request.user != post.author:
+        return HttpResponseForbidden()  # 작성자가 아니면 403 Forbidden 응답을 반환합니다.
     if request.method == "POST":
         post.title = request.POST.get('title')
         post.content = request.POST.get('content')
@@ -60,8 +64,11 @@ def post_edit(request, post_id):
     return render(request, 'post_edit.html', {'post': post})
 
 # 삭제
+@login_required
 def post_delete(request, post_id):
     post = get_object_or_404(Post, id=post_id)
+    if request.user != post.author:
+        return HttpResponseForbidden()  # 작성자가 아니면 403 Forbidden 응답을 반환합니다.
     post.delete()
     return redirect('post_list')
 

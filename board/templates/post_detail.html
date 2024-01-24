@@ -6,10 +6,20 @@
 <body>
     <h1>제목: {{ post.title }}</h1>
     <p>작성자: {{ post.author }}</p>
-    <p>내용: {{ post.content }}</p>
     <p>작성일: {{ post.created_at }}</p>
     <p>수정일: {{ post.updated_at }}</p>
-    <a href="{% url 'post_list' %}">글 목록 가기</a>
+    <p>내용: {{ post.content }}</p>
+    
+    <a href="{% url 'post_list' %}">글 목록 가기</a><br><br>
+
+    <!-- 글 작성자에게만 수정 및 삭제 버튼이 보임 -->
+    {% if user.is_authenticated and user == post.author %}
+        <a href="{% url 'post_edit' post.id %}">수정</a>
+        <form action="{% url 'post_delete' post.id %}" method="POST">
+            {% csrf_token %}
+            <input type="submit" value="삭제">
+        </form><br>
+        {% endif %}
 
     <!-- 북마크 -->
     {% if user.is_authenticated %}
@@ -24,7 +34,7 @@
             </button>
         </form>
     {% endif %}
-    
+
     <!-- 댓글 달기 -->
     <form method="post">
         {% csrf_token %}
