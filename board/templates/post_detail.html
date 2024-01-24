@@ -11,6 +11,20 @@
     <p>수정일: {{ post.updated_at }}</p>
     <a href="{% url 'post_list' %}">글 목록 가기</a>
 
+    <!-- 북마크 -->
+    {% if user.is_authenticated %}
+     <form action="{% url 'toggle_bookmark' post.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit">
+               {% if user in post.bookmarked_by.all %}
+                    북마크 해제
+                {% else %}
+                 북마크
+              {% endif %}
+            </button>
+        </form>
+    {% endif %}
+    
     <!-- 댓글 달기 -->
     <form method="post">
         {% csrf_token %}

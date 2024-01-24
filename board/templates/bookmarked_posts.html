@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% for post in bookmarks %}
+    <div>
+        <p><a href="{% url 'post_detail' post_id=post.pk %}">{{ post.title }}</a></p>
+        <p><a href="{% url 'home' %}">홈 가기</a></p>
+        <!-- 기타 링크 추후 추가 -->
+    </div>
+{% endfor %}
+</body>
+</html>
