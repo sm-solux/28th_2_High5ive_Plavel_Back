@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.conf import settings
 
 # Create your models here.
 class Post(models.Model):
@@ -7,9 +8,10 @@ class Post(models.Model):
     title = models.CharField(max_length=200)                                                  # 제목
     content = models.TextField()                                                              # 내용
     #image = models.ImageField(upload_to='post_images/', null=True, blank=True)               # 이미지 첨부
-    bookmarked_by = models.ManyToManyField(User, related_name='bookmarked_posts', blank=True) # 북마크
+    bookmarked = models.ManyToManyField(User, related_name='bookmarked_posts', blank=True) # 북마크
     created_at = models.DateTimeField(auto_now_add=True)                                      # 작성일
     updated_at = models.DateTimeField(auto_now=True)                                          # 수정일
+
 
     class Meta:
         # 최신 게시글이 위에 오도록

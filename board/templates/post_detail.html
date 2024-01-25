@@ -26,7 +26,7 @@
      <form action="{% url 'toggle_bookmark' post.id %}" method="post">
             {% csrf_token %}
             <button type="submit">
-               {% if user in post.bookmarked_by.all %}
+               {% if user in post.bookmarked.all %}
                     북마크 해제
                 {% else %}
                  북마크
@@ -41,7 +41,7 @@
         <div>
             <strong>작성자: {{ comment.author }}</strong>
             <p>{{ comment.content }}</p>
-            <!-- <p>{{ comment.created_at }}</p> -->
+            <!-- <p>{{ comment.created_at }}</p> : 댓글 단 날짜--> 
         </div>
     {% empty %}
         <p>댓글을 달아보세요.</p> 

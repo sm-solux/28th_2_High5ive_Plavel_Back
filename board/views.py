@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post, Comment
+from django.db.models import Count
 from .forms import CommentForm, PostForm
 from django.http import HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
@@ -25,8 +26,15 @@ def post_detail(request, post_id):
 
 # 글 목록
 def post_list(request):
-    posts = Post.objects.all()
+    # posts = Post.objects.all()
+    posts = Post.objects.annotate(bookmark_count=Count('bookmarked'))
     return render(request, 'post_list.html', {'posts': posts})
+
+# # 댓글 수 세기 -> 최적화엔 더 좋은데 추후 코드 수정 필요.
+# def post_list(request):
+#     # annotate()를 사용하여 각 게시글에 대한 댓글 수를 미리 계산
+#     post_list = Post.objects.annotate(comments_count=Count('comments'))
+#     return render(request, 'post_list.html', {'post_list': post_list})
 
 # 글 작성
 @login_required # 로그인한 상태에서만 게시글 작성 가능
@@ -76,10 +84,10 @@ def post_delete(request, post_id):
 @login_required
 def toggle_bookmark(request, post_id):
     post = get_object_or_404(Post, id=post_id)
-    if request.user in post.bookmarked_by.all():
-        post.bookmarked_by.remove(request.user)
+    if request.user in post.bookmarked.all():
+        post.bookmarked.remove(request.user)
     else:
-        post.bookmarked_by.add(request.user)
+        post.bookmarked.add(request.user)
     return redirect('post_detail', post_id=post_id)
 
 # 북마크된 글
@@ -88,4 +96,3 @@ def bookmarked_posts(request):
     user = request.user
     bookmarks = user.bookmarked_posts.all()
     return render(request, 'bookmarked_posts.html', {'bookmarks': bookmarks})
-
