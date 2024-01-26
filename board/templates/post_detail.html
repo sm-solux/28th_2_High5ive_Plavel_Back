@@ -9,7 +9,10 @@
     <p>작성일: {{ post.created_at }}</p>
     <p>수정일: {{ post.updated_at }}</p>
     <p>내용: {{ post.content }}</p>
-    
+        {% if post.image %}
+            <img src="{{ post.image.url }}" alt="{{ post.title }}" width="500">
+        {% endif %}
+    <br><br>
     <a href="{% url 'post_list' %}">글 목록 가기</a><br><br>
 
     <!-- 글 작성자에게만 수정 및 삭제 버튼이 보임 -->

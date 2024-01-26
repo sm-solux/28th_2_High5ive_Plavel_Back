@@ -70,7 +70,7 @@ def post_detail(request, post_id):
 
 
 def post_list(request):
-    posts = Post.objects.annotate(bookmark_count=Count('bookmarked'))
+    posts = Post.objects.order_by('-created_at').annotate(bookmark_count=Count('bookmarked'))
 
     # 현재 로그인한 사용자를 context에 추가합니다.
     current_user = request.user
@@ -97,7 +97,7 @@ def post_list(request):
 @login_required # 로그인한 상태에서만 게시글 작성 가능
 def post_create(request):
     if request.method == 'POST':
-        form = PostForm(request.POST)
+        form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user  # 현재 로그인한 사용자를 author로 설정

@@ -10,4 +10,4 @@ class CommentForm(forms.ModelForm):
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'content']  # 'author' 필드는 제외
+        fields = ['title', 'content', 'image']  # 'author' 필드는 제외
