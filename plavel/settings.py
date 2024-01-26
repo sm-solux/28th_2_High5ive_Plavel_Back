@@ -147,3 +147,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'sign.CustomUser'
 
 #LOGENTRY_ADMIN = 'myapp.admin.CustomLogEntryAdmin'
+
+import os
+
+MEDIA_URL = '/media/'  # 웹에서 미디어 파일에 접근할 때 사용할 URL
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # 미디어 파일이 저장될 파일 시스템 경로
+

@@ -53,5 +53,46 @@
         {{ form.as_p }}
         <button type="submit">댓글 달기</button>
     </form>
+    <br>
+    
+    <!-- 글쓴이 정보 -->
+    <div class="author-info">
+        <h3>글쓴이</h3>
+        <p>닉네임: {{ post.author.nickname }}</p>
+
+        <!-- 나이 -->
+        {% if  age >= 10 and age <= 19 %}
+            <p>10대</p>
+        {% elif age >= 20 and age <= 29 %}
+            <p>20대</p>
+        {% elif age >= 30 and age <= 39 %}
+            <p>30대</p>
+        {% else %}
+            <p>기타 연령대</p>
+        {% endif %}
+
+        <!-- 성별 -->
+        <p>
+            {% if post.author.gender == 'M' %}
+                남
+            {% elif post.author.gender == 'F' %}
+                여
+            {% else %}
+                미지정
+            {% endif %}
+        </p>
+
+        <!-- 프로필 -->
+        {% if post.author.profile_pic %}
+            <img src="{{ post.author.profile_pic.url }}" alt="프로필 사진">
+        {% else %}
+            <p>프로필 사진이 없습니다.</p>
+        {% endif %}
+
+        <p>여행 성향: {{ post.author.user_type }}</p>
+        <p>자기소개: {{ post.author.bio }}</p>
+    </div>
 </body>
 </html>
+
+<!-- 글쓴이 이름, 나이, 성별, 유형, 자기소개 -->

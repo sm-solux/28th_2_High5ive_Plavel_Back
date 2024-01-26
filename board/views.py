@@ -1,41 +1,97 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Post, Comment
+from .models import Post
 from django.db.models import Count
 from .forms import CommentForm, PostForm
 from django.http import HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
+import datetime
 
 
-# 글 보기(조회)
-@login_required # 로그인한 상태여야 조회 가능
+# # 글 보기(조회)
+# @login_required # 로그인한 상태여야 조회 가능
+# def post_detail(request, post_id):
+#     post = get_object_or_404(Post, id=post_id)
+#     if request.method == 'POST':
+#         form = CommentForm(request.POST)
+#         if form.is_valid():
+#             comment = form.save(commit=False)
+#             comment.post = post
+#             comment.author = request.user # 현재 로그인한 사용자
+#             comment.save()
+#             return redirect('post_detail', post_id=post.pk)
+#     else:
+#         form = CommentForm()
+#     return render(request, 'post_detail.html', {'post': post, 'form': form})
+
+
+@login_required  # 로그인한 상태여야 조회 가능
 def post_detail(request, post_id):
     post = get_object_or_404(Post, id=post_id)
+    
+    # 현재 날짜를 얻습니다.
+    today = datetime.date.today()
+    # 생년월일이 있는 경우 나이를 계산합니다.
+    if post.author.birth_date:
+        # 나이 계산 로직
+        age = today.year - post.author.birth_date.year + 1
+    else:
+        age = None
+
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
             comment.post = post
-            comment.author = request.user # 현재 로그인한 사용자
+            comment.author = request.user  # 현재 로그인한 사용자
             comment.save()
             return redirect('post_detail', post_id=post.pk)
     else:
         form = CommentForm()
-    return render(request, 'post_detail.html', {'post': post, 'form': form})
+
+    # render 함수에 추가적으로 나이 정보를 context에 담아 전달합니다.
+    context = {
+        'post': post,
+        'form': form,
+        'age': age,
+    }
+    
+    return render(request, 'post_detail.html', context)
+
+
 # def post_detail(request, post_id):
 #     post = get_object_or_404(Post, id=post_id)
 #     return render(request, 'post_detail.html', {'post': post})
 
-# 글 목록
-def post_list(request):
-    # posts = Post.objects.all()
-    posts = Post.objects.annotate(bookmark_count=Count('bookmarked'))
-    return render(request, 'post_list.html', {'posts': posts})
-
-# # 댓글 수 세기 -> 최적화엔 더 좋은데 추후 코드 수정 필요.
+# # 댓글 수 세기 -> 최적화엔 더 좋은데 코드 수정 필요.
 # def post_list(request):
 #     # annotate()를 사용하여 각 게시글에 대한 댓글 수를 미리 계산
 #     post_list = Post.objects.annotate(comments_count=Count('comments'))
 #     return render(request, 'post_list.html', {'post_list': post_list})
+
+
+def post_list(request):
+    posts = Post.objects.annotate(bookmark_count=Count('bookmarked'))
+
+    # 현재 로그인한 사용자를 context에 추가합니다.
+    current_user = request.user
+    if current_user.is_authenticated:
+        # 로그인한 상태라면, 현재 사용자의 정보를 context에 추가합니다.
+        context = {
+            'posts': posts,
+            'current_user_nickname': current_user.nickname,
+            'current_user_profile_pic': current_user.profile_pic.url if current_user.profile_pic else None,
+            'current_user_user_type': current_user.user_type,
+        }
+    else:
+        # 로그인하지 않은 상태라면, 사용자 정보를 비워둡니다.
+        context = {
+            'posts': posts,
+            'current_user_nickname': None,
+            'current_user_profile_pic': None,
+            'current_user_user_type': None,
+        }
+
+    return render(request, 'post_list.html', context)
 
 # 글 작성
 @login_required # 로그인한 상태에서만 게시글 작성 가능
