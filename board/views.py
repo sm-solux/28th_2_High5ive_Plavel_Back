@@ -37,6 +37,8 @@ def post_detail(request, post_id):
     else:
         age = None
 
+    bookmarks_count = post.bookmarked.count()
+
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -53,6 +55,7 @@ def post_detail(request, post_id):
         'post': post,
         'form': form,
         'age': age,
+        'bookmarks_count': bookmarks_count,
     }
     
     return render(request, 'post_detail.html', context)

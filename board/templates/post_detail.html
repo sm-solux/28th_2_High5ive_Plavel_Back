@@ -30,16 +30,17 @@
             {% csrf_token %}
             <button type="submit">
                {% if user in post.bookmarked.all %}
-                    북마크 해제
+                    북마크 해제 {{ bookmarks_count }}
                 {% else %}
-                 북마크
-              {% endif %}
+                    북마크 {{ bookmarks_count }}
+                {% endif %}
             </button>
         </form>
     {% endif %}
 
+    <p>댓글: {{ post.comments.all.count }}</p>
+    
     <!-- 댓글 목록 -->
-    <h2>댓글</h2>
     {% for comment in post.comments.all %}
         <div>
             <strong>작성자: {{ comment.author }}</strong>
