@@ -1,10 +1,13 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.conf import settings
+from sign.models import CustomUser
+
+User = CustomUser
 
 # Create your models here.
 class Post(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE)                                # 작성자
+    author = models.ForeignKey(User, null=True, on_delete=models.CASCADE)                     # 작성자
     title = models.CharField(max_length=200)                                                  # 제목
     content = models.TextField()                                                              # 내용
     #image = models.ImageField(upload_to='post_images/', null=True, blank=True)               # 이미지 첨부
@@ -19,7 +22,7 @@ class Post(models.Model):
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 

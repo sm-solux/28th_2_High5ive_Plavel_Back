@@ -5,6 +5,7 @@ from .forms import CommentForm, PostForm
 from django.http import HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
 
+
 # 글 보기(조회)
 @login_required # 로그인한 상태여야 조회 가능
 def post_detail(request, post_id):

@@ -1,14 +1,14 @@
 from django.contrib import admin
-from .models import User
+from .models import CustomUser
+
 
 #admin 페이지에 User를 등록한다는 뜻
-@admin.register(User)
+@admin.register(CustomUser)
 class UserAdmin(admin.ModelAdmin):
 	#리스트에 보여지는 것
     list_display=(
         'user_id',
         'user_pw',
-        'user_name',
         'user_register_dttm'
     )
     
