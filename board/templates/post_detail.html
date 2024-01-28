@@ -5,12 +5,17 @@
 </head>
 <body>
     <h1>제목: {{ post.title }}</h1>
-    <p>작성자: {{ post.author }}</p>
+    <p>작성자:
+    {% if post.author.profile_pic %}
+        <img src="{{ post.author.profile_pic.url }}" alt="프로필 사진" width="50">
+    {% else %}
+        <p>프로필 사진이 없습니다.</p>
+    {% endif %}{{ post.author }}</p>
     <p>작성일: {{ post.created_at }}</p>
     <p>수정일: {{ post.updated_at }}</p>
     <p>내용: {{ post.content }}</p>
         {% if post.image %}
-            <img src="{{ post.image.url }}" alt="{{ post.title }}" width="500">
+            <img src="{{ post.image.url }}" alt="{{ post.title }}" width="300">
         {% endif %}
     <br><br>
     <a href="{% url 'post_list' %}">글 목록 가기</a><br><br>
@@ -43,8 +48,12 @@
     <!-- 댓글 목록 -->
     {% for comment in post.comments.all %}
         <div>
-            <strong>작성자: {{ comment.author }}</strong>
-            <p>{{ comment.content }}</p>
+            <strong>{% if comment.author.profile_pic %}
+                <img src="{{ comment.author.profile_pic.url }}" alt="프로필 사진" width="50">
+            {% else %}
+                <p>프로필 사진이 없습니다.</p>
+            {% endif %}{{ comment.author }}</strong>
+            <p>댓글 내용: {{ comment.content }}</p>
             <!-- <p>{{ comment.created_at }}</p> : 댓글 단 날짜--> 
         </div>
     {% empty %}
@@ -88,7 +97,7 @@
 
         <!-- 프로필 -->
         {% if post.author.profile_pic %}
-            <img src="{{ post.author.profile_pic.url }}" alt="프로필 사진">
+            <img src="{{ post.author.profile_pic.url }}" alt="프로필 사진" width="100">
         {% else %}
             <p>프로필 사진이 없습니다.</p>
         {% endif %}

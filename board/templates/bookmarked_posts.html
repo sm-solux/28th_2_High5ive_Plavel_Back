@@ -13,8 +13,12 @@
         <h3><a href="{% url 'post_detail' post_id=post.pk %}">{{ post.title }}</a></h3>
         <p>{{ post.content }}</p>
         <p>{{ post.created_at }}</p>
+        <p>글쓴이: {{ post.author.nickname }}</p>
+        <p>댓글: {{ post.comments.all.count }}</p>
+        <p>북마크: {{ post.bookmarks_count }}</p>
     </div>
     <!-- 기타 링크 추후 추가 -->
     {% endfor %}
+
 </body>
 </html>

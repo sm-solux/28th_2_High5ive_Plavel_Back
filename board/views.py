@@ -6,24 +6,7 @@ from django.http import HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
 import datetime
 
-
-# # 글 보기(조회)
-# @login_required # 로그인한 상태여야 조회 가능
-# def post_detail(request, post_id):
-#     post = get_object_or_404(Post, id=post_id)
-#     if request.method == 'POST':
-#         form = CommentForm(request.POST)
-#         if form.is_valid():
-#             comment = form.save(commit=False)
-#             comment.post = post
-#             comment.author = request.user # 현재 로그인한 사용자
-#             comment.save()
-#             return redirect('post_detail', post_id=post.pk)
-#     else:
-#         form = CommentForm()
-#     return render(request, 'post_detail.html', {'post': post, 'form': form})
-
-
+# 글 보기 페이지
 @login_required  # 로그인한 상태여야 조회 가능
 def post_detail(request, post_id):
     post = get_object_or_404(Post, id=post_id)
@@ -61,10 +44,6 @@ def post_detail(request, post_id):
     return render(request, 'post_detail.html', context)
 
 
-# def post_detail(request, post_id):
-#     post = get_object_or_404(Post, id=post_id)
-#     return render(request, 'post_detail.html', {'post': post})
-
 # # 댓글 수 세기 -> 최적화엔 더 좋은데 코드 수정 필요.
 # def post_list(request):
 #     # annotate()를 사용하여 각 게시글에 대한 댓글 수를 미리 계산
@@ -72,6 +51,7 @@ def post_detail(request, post_id):
 #     return render(request, 'post_list.html', {'post_list': post_list})
 
 
+# 글 목록
 def post_list(request):
     posts = Post.objects.order_by('-created_at').annotate(bookmark_count=Count('bookmarked'))
 
@@ -96,6 +76,7 @@ def post_list(request):
 
     return render(request, 'post_list.html', context)
 
+
 # 글 작성
 @login_required # 로그인한 상태에서만 게시글 작성 가능
 def post_create(request):
@@ -110,13 +91,6 @@ def post_create(request):
         form = PostForm()
     return render(request, 'post_create.html', {'form': form})
 
-# def post_create(request):
-#     if request.method == 'POST':
-#         title = request.POST.get('title')
-#         content = request.POST.get('content')
-#         post = Post.objects.create(title=title, content=content)
-#         return redirect('post_detail', post.id)
-#     return render(request, 'post_create.html')
 
 # 수정
 @login_required
@@ -155,4 +129,8 @@ def toggle_bookmark(request, post_id):
 def bookmarked_posts(request):
     user = request.user
     bookmarks = user.bookmarked_posts.all()
+
+    for post in bookmarks:
+        post.bookmarks_count = post.bookmarked.count()
+        
     return render(request, 'bookmarked_posts.html', {'bookmarks': bookmarks})

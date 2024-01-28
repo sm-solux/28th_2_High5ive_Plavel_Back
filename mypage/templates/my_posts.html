@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a href="{% url 'post_list' %}">게시글 목록</a>
+    {% for post in my_posts %}
+<div>
+    <h2><a href="{% url 'post_detail' post_id=post.pk %}">{{ post.title }}</a></h2>
+    <p>{{ post.content }}</p>
+    <p>{{ post.created_at }}</p>
+    <p>글쓴이: {{ post.author.nickname }}</p>
+</div>
+{% endfor %}
+</body>
+</html>

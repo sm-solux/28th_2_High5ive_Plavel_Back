@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a href="{% url 'my_posts' %}">내가 쓴 글</a>
+    <a href="{% url 'bookmarked_posts' %}">북마크 글</a>
+    <a href="{% url 'post_list' %}">게시글 목록</a>
+
+    <!-- <a href="{% url 'bookmarked_posts' %}">내가 쓴 글</a>
+    <a href="{% url 'bookmarked_posts' %}">댓글 단 글</a>
+    <a href="{% url 'bookmarked_posts' %}">테스트 결과</a> -->
+
+    {% if current_user_nickname %}
+        <div class="current-user-info">
+            <h3>마이페이지(회원정보)</h3>
+            <p>이름: {{ current_user_name }}</p>
+            <p>닉네임: {{ current_user_nickname }}</p>
+            <p>이메일: {{ current_user_email }}</p>
+            <p>
+                {% if current_user_gender == 'M' %}
+                    성별: 남
+                {% elif current_user_gender == 'F' %}
+                    성별: 여
+                {% else %}
+                    미지정
+                {% endif %}
+            </p>
+            <p>생년월일: {{ current_user_birth }}</p>
+            <p>여행 성향: {{ current_user_user_type }}</p>
+            <p>자기소개: {{ current_user_bio }}</p>
+            {% if current_user_profile_pic %}
+                프로필 사진 <img src="{{ current_user_profile_pic }}" alt="현재 사용자의 프로필 사진">
+            {% endif %}
+        </div>
+    {% endif %}
+</body>
+</html>
