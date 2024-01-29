@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.db.models import Count
+from board.models import Post
 
 # Create your views here.
 def my_info(request):
@@ -28,8 +30,24 @@ def my_info(request):
 
     return render(request, 'my_info.html', context)
 
+
+#내가 쓴 글
 @login_required
 def my_posts(request):
     user = request.user
-    my_posts = user.post_set.all()
+    my_posts = user.post_set.all().annotate(bookmark_count=Count('bookmarked'))
     return render(request, 'my_posts.html', {'my_posts': my_posts})
+
+
+#댓글 단 글
+@login_required
+def my_comments(request):
+    user = request.user
+    my_comments = user.comment_set.all()
+    commented_posts = {comment.post for comment in my_comments}
+
+    # 북마크 카운트를 계산합니다.
+    for post in commented_posts:
+        post.bookmarks_count = post.bookmarked.count()
+    commented_posts = {comment.post for comment in my_comments}
+    return render(request, 'my_comments.html', {'commented_posts': commented_posts})

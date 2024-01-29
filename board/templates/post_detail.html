@@ -10,7 +10,8 @@
         <img src="{{ post.author.profile_pic.url }}" alt="프로필 사진" width="50">
     {% else %}
         <p>프로필 사진이 없습니다.</p>
-    {% endif %}{{ post.author }}</p>
+    {% endif %}{{ post.author }}
+    </p>여행 성향: {{ post.author.user_type }}</p>
     <p>작성일: {{ post.created_at }}</p>
     <p>수정일: {{ post.updated_at }}</p>
     <p>내용: {{ post.content }}</p>
@@ -52,7 +53,7 @@
                 <img src="{{ comment.author.profile_pic.url }}" alt="프로필 사진" width="50">
             {% else %}
                 <p>프로필 사진이 없습니다.</p>
-            {% endif %}{{ comment.author }}</strong>
+            {% endif %}{{ comment.author }}</strong><p>여행 성향: {{ comments.author.user_type }}</p>
             <p>댓글 내용: {{ comment.content }}</p>
             <!-- <p>{{ comment.created_at }}</p> : 댓글 단 날짜--> 
         </div>

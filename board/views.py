@@ -51,7 +51,7 @@ def post_detail(request, post_id):
 #     return render(request, 'post_list.html', {'post_list': post_list})
 
 
-# 글 목록
+# 글 목록1 (최신글)
 def post_list(request):
     posts = Post.objects.order_by('-created_at').annotate(bookmark_count=Count('bookmarked'))
 
@@ -75,6 +75,15 @@ def post_list(request):
         }
 
     return render(request, 'post_list.html', context)
+
+
+# 글 목록2 (인기글)
+def post_list2(request):
+    posts = Post.objects.annotate(
+        bookmark_count=Count('bookmarked', distinct=True),
+        comments_count=Count('comments')
+    ).order_by('-bookmark_count', '-comments_count')
+    return render(request, 'post_list2.html', {'posts': posts})
 
 
 # 글 작성
@@ -132,5 +141,5 @@ def bookmarked_posts(request):
 
     for post in bookmarks:
         post.bookmarks_count = post.bookmarked.count()
-        
+
     return render(request, 'bookmarked_posts.html', {'bookmarks': bookmarks})

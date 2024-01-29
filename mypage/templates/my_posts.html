@@ -13,6 +13,9 @@
     <p>{{ post.content }}</p>
     <p>{{ post.created_at }}</p>
     <p>글쓴이: {{ post.author.nickname }}</p>
+    <p>여행성향: {{ post.author.user_type }}</p>
+    <p>댓글: {{ post.comments.all.count }}</p>
+    <p>북마크: {{ post.bookmark_count }}</p>
 </div>
 {% endfor %}
 </body>

@@ -3,24 +3,36 @@
 <head>
     <title>게시글 목록(인기글)</title>
 </head>
-<body>
-    <h1>인기글</h1>    
-    
-
-    <!-- <a href="{% url 'home' %}">홈</a>
+<h1>인기글</h1>
+    <p>1순위. 북마크순 / 2순위. 댓글순</p>    
+    <a href="{% url 'home' %}">홈</a>
     <a href="{% url 'logout' %}">로그아웃</a>
     <a href="{% url 'post_create' %}">새 게시글 작성</a>
-    <a href="{% url 'bookmarked_posts' %}">북마크 글 보기</a>
+    <br><br>
     {% for post in posts %}
     <div>
         <h2><a href="{% url 'post_detail' post_id=post.pk %}">{{ post.title }}</a></h2>
         <p>{{ post.content }}</p>
         <p>{{ post.created_at }}</p>
+        <p>글쓴이: {{ post.author.nickname }}</p>
+        <p>여행성향: {{ post.author.user_type }}</p>
         <p>댓글: {{ post.comments.all.count }}</p>
         <p>북마크: {{ post.bookmark_count }}</p>
     </div>
     {% endfor %}
+    <br><br>
+    {% if current_user_nickname %}
+        <div class="current-user-info">
+            <h3>나의 정보</h3>
+            <p>닉네임: {{ current_user_nickname }}</p>
+            {% if current_user_profile_pic %}
+                <img src="{{ current_user_profile_pic }}" alt="현재 사용자의 프로필 사진">
+            {% endif %}
+            <p>여행성향: {{ current_user_user_type }}</p>
+        </div>
+    {% endif %}
 </body>
-</html> -->
+    
+</html>
 
-<!-- post_detail/<int:post_id>/ -->
+<!-- post_detail/<int:post_id>/
