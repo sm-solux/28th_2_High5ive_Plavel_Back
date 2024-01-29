@@ -3,17 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>마이페이지_회원정보</title>
 </head>
 <body>
+    <a href="{% url 'home' %}">홈</a>
+    <a href="{% url 'post_list' %}">최신 글</a>
+    <a href="{% url 'post_list2' %}">인기 글</a>
+    <p>테스트 결과 페이지 추가</p>
+
     <a href="{% url 'my_posts' %}">내가 쓴 글</a>
     <a href="{% url 'my_comments' %}">댓글 단 글</a>
     <a href="{% url 'bookmarked_posts' %}">북마크 글</a>
-    <a href="{% url 'post_list' %}">게시글 목록</a>
-
-    <!-- <a href="{% url 'bookmarked_posts' %}">내가 쓴 글</a>
-    <a href="{% url 'bookmarked_posts' %}">댓글 단 글</a>
-    <a href="{% url 'bookmarked_posts' %}">테스트 결과</a> -->
+    <a href="{% url 'my_info' %}">회원 정보</a>
+    
+    
 
     {% if current_user_nickname %}
         <div class="current-user-info">

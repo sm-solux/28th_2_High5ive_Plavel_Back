@@ -51,7 +51,7 @@ def login(request):
         user=authenticate(request,user_id=user_id,password=user_pw)
         if user is not None:
             auth.login(request,user)
-            return redirect('/home')
+            return redirect('/board/home')
         else:
             messages.warning(request, "아이디와 비밀번호를 확인해주세요.")
             return render(request,'login.html')
@@ -61,3 +61,4 @@ def login(request):
 def logout(request):
     auth.logout(request)
     return redirect('/sign/login')
+

@@ -4,11 +4,15 @@
     <title>게시글 목록(최신글)</title>
 </head>
 <body>
-    <h1>최신글</h1>    
     <a href="{% url 'home' %}">홈</a>
+    <a href="{% url 'post_list' %}">최신 글</a>
+    <a href="{% url 'post_list2' %}">인기 글</a><br><br>
+    <a href="{% url 'my_info' %}">마이페이지</a>
     <a href="{% url 'logout' %}">로그아웃</a>
-    <a href="{% url 'post_create' %}">새 게시글 작성</a>
+    <a href="{% url 'post_create' %}">✏️글 쓰기</a>
     <br><br>
+    <h1>최신글</h1>    
+
     {% for post in posts %}
     <div>
         <h2><a href="{% url 'post_detail' post_id=post.pk %}">{{ post.title }}</a></h2>
@@ -26,21 +30,12 @@
             <h3>나의 정보</h3>
             <p>닉네임: {{ current_user_nickname }}</p>
             {% if current_user_profile_pic %}
-                <img src="{{ current_user_profile_pic }}" alt="현재 사용자의 프로필 사진">
+                <img src="{{ current_user_profile_pic }}" alt="현재 사용자의 프로필 사진" width="100">
             {% endif %}
             <p>여행성향: {{ current_user_user_type }}</p>
         </div>
     {% endif %}
-    <!-- <div class="author-info">
-        <h3>작성자 정보:</h3>
-        <p>닉네임: {{ post.author.nickname }}</p>
-        {% if post.author.profile_pic %}
-            <img src="{{ post.author.profile_pic.url }}" alt="프로필 사진">
-        {% else %}
-            <p>프로필 사진이 없습니다.</p>
-        {% endif %}
-        <p>유형: {{ post.author.user_type }}</p>
-    </div> -->
+    
 </body>
 </html>
 

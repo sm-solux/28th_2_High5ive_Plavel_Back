@@ -4,6 +4,10 @@
     <title>{{ post.title }}</title>
 </head>
 <body>
+    <a href="{% url 'home' %}">홈</a>
+    <a href="{% url 'post_list' %}">최신 글</a>
+    <a href="{% url 'post_list2' %}">인기 글</a><br><br>
+    
     <h1>제목: {{ post.title }}</h1>
     <p>작성자:
     {% if post.author.profile_pic %}
@@ -19,7 +23,6 @@
             <img src="{{ post.image.url }}" alt="{{ post.title }}" width="300">
         {% endif %}
     <br><br>
-    <a href="{% url 'post_list' %}">글 목록 가기</a><br><br>
 
     <!-- 글 작성자에게만 수정 및 삭제 버튼이 보임 -->
     {% if user.is_authenticated and user == post.author %}

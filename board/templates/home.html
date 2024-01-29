@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>게시글 목록(인기글)</title>
+    <title>HOME</title>
 </head>
 <body>
     <a href="{% url 'home' %}">홈</a>
@@ -9,9 +9,8 @@
     <a href="{% url 'post_list2' %}">인기 글</a><br><br>
     <a href="{% url 'my_info' %}">마이페이지</a>
     <a href="{% url 'logout' %}">로그아웃</a>
-    <a href="{% url 'post_create' %}">✏️글 쓰기</a>
     <br><br>
-    <h1>인기글</h1> 
+    <h2>인기글 (북마크 순)</h2> 
 
     {% for post in posts %}
     <div>
@@ -20,21 +19,10 @@
         <p>{{ post.created_at }}</p>
         <p>글쓴이: {{ post.author.nickname }}</p>
         <p>여행성향: {{ post.author.user_type }}</p>
-        <p>댓글: {{ post.comments.all.count }}</p>
+        <p>댓글: {{ post.comments_count }}</p>
         <p>북마크: {{ post.bookmark_count }}</p>
     </div>
     {% endfor %}
-    <br><br>
-    {% if current_user_nickname %}
-        <div class="current-user-info">
-            <h3>나의 정보</h3>
-            <p>닉네임: {{ current_user_nickname }}</p>
-            {% if current_user_profile_pic %}
-                <img src="{{ current_user_profile_pic }}" alt="현재 사용자의 프로필 사진" width="100">
-            {% endif %}
-            <p>여행성향: {{ current_user_user_type }}</p>
-        </div>
-    {% endif %}
 </body>
     
 </html>

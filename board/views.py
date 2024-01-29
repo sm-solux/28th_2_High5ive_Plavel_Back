@@ -79,11 +79,28 @@ def post_list(request):
 
 # 글 목록2 (인기글)
 def post_list2(request):
-    posts = Post.objects.annotate(
-        bookmark_count=Count('bookmarked', distinct=True),
-        comments_count=Count('comments')
-    ).order_by('-bookmark_count', '-comments_count')
-    return render(request, 'post_list2.html', {'posts': posts})
+    posts = Post.objects.annotate(bookmark_count=Count('bookmarked', distinct=True),comments_count=Count('comments')).order_by('-bookmark_count', '-comments_count')
+    
+    # 현재 로그인한 사용자를 context에 추가합니다.
+    current_user = request.user
+    if current_user.is_authenticated:
+        # 로그인한 상태라면, 현재 사용자의 정보를 context에 추가합니다.
+        context = {
+            'posts': posts,
+            'current_user_nickname': current_user.nickname,
+            'current_user_profile_pic': current_user.profile_pic.url if current_user.profile_pic else None,
+            'current_user_user_type': current_user.user_type,
+        }
+    else:
+        # 로그인하지 않은 상태라면, 사용자 정보를 비워둡니다.
+        context = {
+            'posts': posts,
+            'current_user_nickname': None,
+            'current_user_profile_pic': None,
+            'current_user_user_type': None,
+        }
+    
+    return render(request, 'post_list2.html', context)
 
 
 # 글 작성
@@ -143,3 +160,12 @@ def bookmarked_posts(request):
         post.bookmarks_count = post.bookmarked.count()
 
     return render(request, 'bookmarked_posts.html', {'bookmarks': bookmarks})
+
+
+@login_required
+def home(request):
+    posts = Post.objects.annotate(
+        bookmark_count=Count('bookmarked', distinct=True),
+        comments_count=Count('comments', distinct=True)
+    ).order_by('-bookmark_count', '-comments_count')
+    return render(request, 'home.html', {'posts': posts})

@@ -28,7 +28,6 @@ urlpatterns = [
     path('sign/', include('sign.urls')),
     path('board/', include('board.urls')),
     path('mypage/', include('mypage.urls')),
-    path('home', view.home, name="home"),
 ]
 
 if settings.DEBUG:

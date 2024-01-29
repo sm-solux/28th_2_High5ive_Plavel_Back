@@ -4,6 +4,10 @@
     <title>새 게시글 작성</title>
 </head>
 <body>
+    <a href="{% url 'home' %}">홈</a>
+    <a href="{% url 'post_list' %}">최신 글</a>
+    <a href="{% url 'post_list2' %}">인기 글</a><br><br>
+    
     <h1>새 게시글 작성</h1>
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}

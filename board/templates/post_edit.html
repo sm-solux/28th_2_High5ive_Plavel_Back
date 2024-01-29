@@ -5,6 +5,10 @@
     <title>글 수정</title>
 </head>
 <body>
+    <a href="{% url 'home' %}">홈</a>
+    <a href="{% url 'post_list' %}">최신 글</a>
+    <a href="{% url 'post_list2' %}">인기 글</a><br><br>
+    
     <h1>글 수정</h1>
     <form method="post" action="{% url 'post_edit' post.id %}">
         {% csrf_token %}
