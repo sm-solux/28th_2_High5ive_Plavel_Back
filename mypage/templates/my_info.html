@@ -13,7 +13,7 @@
 
     <a href="{% url 'my_posts' %}">내가 쓴 글</a>
     <a href="{% url 'my_comments' %}">댓글 단 글</a>
-    <a href="{% url 'bookmarked_posts' %}">북마크 글</a>
+    <a href="{% url 'bookmarked_posts' %}">북마크</a>
     <a href="{% url 'my_info' %}">회원 정보</a>
     
     
@@ -37,7 +37,8 @@
             <p>여행 성향: {{ current_user_user_type }}</p>
             <p>자기소개: {{ current_user_bio }}</p>
             {% if current_user_profile_pic %}
-                프로필 사진 <img src="{{ current_user_profile_pic }}" alt="현재 사용자의 프로필 사진">
+                프로필 사진 <br>
+                <img src="{{ current_user_profile_pic }}" alt="현재 사용자의 프로필 사진" width="300">
             {% endif %}
         </div>
     {% endif %}

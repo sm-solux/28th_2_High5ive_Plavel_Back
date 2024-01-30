@@ -6,8 +6,7 @@
 <body>
     <a href="{% url 'home' %}">홈</a>
     <a href="{% url 'post_list' %}">최신 글</a>
-    <a href="{% url 'post_list2' %}">인기 글</a><br><br>
-    
+    <a href="{% url 'post_list2' %}">인기 글</a>
     <h1>새 게시글 작성</h1>
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
@@ -15,11 +14,18 @@
         <input type="text" id="title" name="title"><br><br>
         <label for="content">내용:</label><br>
         <textarea id="content" name="content"></textarea><br><br>
-        {% if form.image %}
-            <label for="{{ form.image.id_for_label }}">이미지:</label><br>
-            {{ form.image }}
+        {% if form.image1 %}
+            <label for="{{ form.image1.id_for_label }}">이미지1:</label><br>
+            {{ form.image1 }}<br><br>
         {% endif %}
-        <br><br><br><br>
+        {% if form.image2 %}
+            <label for="{{ form.image2.id_for_label }}">이미지2:</label><br>
+            {{ form.image2 }}<br><br>
+        {% endif %}
+        {% if form.image3 %}
+            <label for="{{ form.image3.id_for_label }}">이미지3:</label><br>
+            {{ form.image3 }}<br><br>
+        {% endif %}
         <input type="submit" value="작성">
     </form>
 </body>

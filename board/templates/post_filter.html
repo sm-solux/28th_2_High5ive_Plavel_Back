@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>게시글 목록(최신글)</title>
+    <title>게시글 목록(필터링)</title>
 </head>
 <body>
     <a href="{% url 'home' %}">홈</a>
@@ -11,13 +11,7 @@
     <a href="{% url 'logout' %}">로그아웃</a>
     <a href="{% url 'post_create' %}">✏️글 쓰기</a>
     <br><br>
-    <h1>최신글</h1>    
-
-    <!-- <form method="GET" action="{% url 'post_filter' %}">
-        <label for="user_type">사용자 유형:</label>
-        <input type="text" id="user_type" name="user_type" placeholder="여행 성향을 입력하세요">
-        <input type="submit" value="필터">
-    </form> -->
+    <h2>{{ user_type }} 필터 적용중입니다.</h2>    
 
     <button onclick="filterPosts('Sun')">Sun</button>
     <button onclick="filterPosts('Jupiter')">Jupiter</button>
@@ -34,7 +28,6 @@
     }
     </script>
 
-
     {% for post in posts %}
     <div>
         <h2><a href="{% url 'post_detail' post_id=post.pk %}">{{ post.title }}</a></h2>
@@ -46,6 +39,7 @@
         <p>북마크: {{ post.bookmark_count }}</p>
     </div>
     {% endfor %}
+
     <br><br>
     {% if current_user_nickname %}
         <div class="current-user-info">

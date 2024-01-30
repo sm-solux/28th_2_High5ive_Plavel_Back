@@ -13,7 +13,7 @@
 
     <a href="{% url 'my_posts' %}">내가 쓴 글</a>
     <a href="{% url 'my_comments' %}">댓글 단 글</a>
-    <a href="{% url 'bookmarked_posts' %}">북마크 글</a>
+    <a href="{% url 'bookmarked_posts' %}">북마크</a>
     <a href="{% url 'my_info' %}">회원 정보</a>
     <h2>내가 댓글 단 글</h2>
     {% for post in commented_posts %}

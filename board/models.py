@@ -9,7 +9,11 @@ class Post(models.Model):
     author = models.ForeignKey(User, null=True, on_delete=models.CASCADE)                     # 작성자
     title = models.CharField(max_length=200)                                                  # 제목
     content = models.TextField()                                                              # 내용
-    image = models.ImageField(upload_to='post_images/', null=True, blank=True)                # 이미지 첨부
+    #image = models.ImageField(upload_to='post_images/', null=True, blank=True)                # 이미지 첨부
+    image1 = models.ImageField(upload_to='post_images/', null=True, blank=True)
+    image2 = models.ImageField(upload_to='post_images/', null=True, blank=True)
+    image3 = models.ImageField(upload_to='post_images/', null=True, blank=True)                
+    
     bookmarked = models.ManyToManyField(User, related_name='bookmarked_posts', blank=True) # 북마크
     created_at = models.DateTimeField(auto_now_add=True)                                      # 작성일
     updated_at = models.DateTimeField(auto_now=True)                                          # 수정일

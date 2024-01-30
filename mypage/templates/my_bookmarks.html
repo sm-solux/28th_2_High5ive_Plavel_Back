@@ -7,7 +7,7 @@
 </head>
 <body>
     <p><a href="{% url 'home' %}">홈 가기</a></p>
-    <h2>내가 북마크한 글</h2>
+    <h2>북마크</h2>
     {% for post in bookmarks %}
     <div>
         <h3><a href="{% url 'post_detail' post_id=post.pk %}">{{ post.title }}</a></h3>

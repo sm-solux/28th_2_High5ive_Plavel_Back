@@ -76,6 +76,38 @@ def post_list(request):
 
     return render(request, 'post_list.html', context)
 
+# 글 필터링
+def post_filter(request):
+    user_type = request.GET.get('user_type', '')
+    if user_type:
+        posts = Post.objects.filter(author__user_type=user_type)
+    else:
+        posts = Post.objects.all()
+
+    posts = Post.objects.filter(author__user_type=user_type).order_by('-created_at').annotate(bookmark_count=Count('bookmarked'))
+
+    # 현재 로그인한 사용자를 context에 추가합니다.
+    current_user = request.user
+    if current_user.is_authenticated:
+        # 로그인한 상태라면, 현재 사용자의 정보를 context에 추가합니다.
+        context = {
+            'posts': posts,
+            'user_type': user_type,
+            'current_user_nickname': current_user.nickname,
+            'current_user_profile_pic': current_user.profile_pic.url if current_user.profile_pic else None,
+            'current_user_user_type': current_user.user_type,
+        }
+    else:
+        # 로그인하지 않은 상태라면, 사용자 정보를 비워둡니다.
+        context = {
+            'posts': posts,
+            'current_user_nickname': None,
+            'current_user_profile_pic': None,
+            'current_user_user_type': None,
+        }
+
+    return render(request, 'post_filter.html', context)
+
 
 # 글 목록2 (인기글)
 def post_list2(request):
@@ -117,26 +149,60 @@ def post_create(request):
         form = PostForm()
     return render(request, 'post_create.html', {'form': form})
 
+# @login_required
+# def post_edit(request, post_id):
+#     post = get_object_or_404(Post, id=post_id)
+#     if request.user != post.author:
+#         return HttpResponseForbidden()  # 작성자가 아니면 403 Forbidden 응답을 반환합니다.
+#     if request.method == "POST":
+#         form = PostForm(request.POST, request.FILES, instance=post)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('post_detail', post.id)
+#     else:
+#         form = PostForm(instance=post)
+#     return render(request, 'post_edit.html', {'form': form})
 
 # 수정
 @login_required
 def post_edit(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     if request.user != post.author:
-        return HttpResponseForbidden()  # 작성자가 아니면 403 Forbidden 응답을 반환합니다.
+        return HttpResponseForbidden()  # 작성자가 아니면 403 Forbidden 응답을 반환.
+    
     if request.method == "POST":
-        post.title = request.POST.get('title')
-        post.content = request.POST.get('content')
-        post.save()
-        return redirect('post_detail', post.id)
-    return render(request, 'post_edit.html', {'post': post})
+        form = PostForm(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            if 'image1' in request.FILES:
+                post.image1 = request.FILES['image1']
+            if 'image2' in request.FILES:
+                post.image2 = request.FILES['image2']
+            if 'image3' in request.FILES:
+                post.image3 = request.FILES['image3']
+            post.title = form.cleaned_data['title']
+            post.content = form.cleaned_data['content']
+            post.save()
+            return redirect('post_detail', post.id)
+    else:
+        form = PostForm(instance=post)
+    return render(request, 'post_edit.html', {'form': form, 'post': post})
+
+# 수정_이미지 삭제
+@login_required
+def delete_image(request, post_id, image_field):
+    post = get_object_or_404(Post, id=post_id)
+    if request.user != post.author:
+        return HttpResponseForbidden()  # 작성자가 아니면 403 Forbidden 응답을 반환.
+    getattr(post, image_field).delete()
+    return redirect('post_edit', post.id)
+
 
 # 삭제
 @login_required
 def post_delete(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     if request.user != post.author:
-        return HttpResponseForbidden()  # 작성자가 아니면 403 Forbidden 응답을 반환합니다.
+        return HttpResponseForbidden()  # 작성자가 아니면 403 Forbidden 응답을 반환.
     post.delete()
     return redirect('post_list')
 

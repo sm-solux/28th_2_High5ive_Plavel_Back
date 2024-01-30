@@ -10,7 +10,7 @@
     <a href="{% url 'post_list2' %}">인기 글</a><br><br>
     
     <h1>글 수정</h1>
-    <form method="post" action="{% url 'post_edit' post.id %}">
+    <form method="post" action="{% url 'post_edit' post.id %}" enctype="multipart/form-data">
         {% csrf_token %}
         <label for="title">제목:</label>
         <input type="text" id="title" name="title" value="{{ post.title }}" required><br><br>
@@ -18,7 +18,31 @@
         <label for="content">내용:</label>
         <textarea id="content" name="content" rows="10" required>{{ post.content }}</textarea><br><br>
 
+        <label for="{{ form.image1.id_for_label }}">이미지1:</label><br>
+        {% if post.image1 %}
+            <img src="{{ post.image1.url }}" alt="Image1" style="width: 150px; height: auto;"><br>
+            <a href="{% url 'delete_image' post.id 'image1' %}">삭제</a><br>
+        {% endif %}
+        <input type="file" id="{{ form.image1.id_for_label }}" name="{{ form.image1.name }}"><br><br>
+
+        <label for="{{ form.image2.id_for_label }}">이미지2:</label><br>
+        {% if post.image2 %}
+            <img src="{{ post.image2.url }}" alt="Image2" style="width: 150px; height: auto;"><br>
+            <a href="{% url 'delete_image' post.id 'image2' %}">삭제</a><br>
+        {% endif %}
+        <input type="file" id="{{ form.image2.id_for_label }}" name="{{ form.image2.name }}"><br><br>
+
+        <label for="{{ form.image3.id_for_label }}">이미지3:</label><br>
+        {% if post.image3 %}
+            <img src="{{ post.image3.url }}" alt="Image3" style="width: 150px; height: auto;"><br>
+            <a href="{% url 'delete_image' post.id 'image3' %}">삭제</a><br>
+        {% endif %}
+        <input type="file" id="{{ form.image3.id_for_label }}" name="{{ form.image3.name }}"><br><br>
+
+
+
         <input type="submit" value="수정">
     </form>
 </body>
 </html>
+
