@@ -7,10 +7,10 @@
     <a href="{% url 'home' %}">홈</a>
     <a href="{% url 'post_list' %}">최신 글</a>
     <a href="{% url 'post_list2' %}">인기 글</a><br><br>
-    <a href="{% url 'my_info' %}">마이페이지</a>
+    <a href="{% url 'my_test' %}">마이페이지</a>
     <a href="{% url 'logout' %}">로그아웃</a>
     <br><br>
-    <h2>인기글 (북마크 순)</h2> 
+    <h2>home_인기글 (북마크 순)</h2> 
 
     {% for post in posts %}
     <div>

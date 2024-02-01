@@ -8,13 +8,16 @@
 <body>
     <a href="{% url 'home' %}">홈</a>
     <a href="{% url 'post_list' %}">최신 글</a>
-    <a href="{% url 'post_list2' %}">인기 글</a>
-    <p>테스트 결과 페이지 추가</p>
+    <a href="{% url 'post_list2' %}">인기 글</a><br><br>
 
+    <p>마이페이지 메뉴</p>
+    <a href="{% url 'my_test' %}">테스트결과</a>
     <a href="{% url 'my_posts' %}">내가 쓴 글</a>
     <a href="{% url 'my_comments' %}">댓글 단 글</a>
     <a href="{% url 'bookmarked_posts' %}">북마크</a>
     <a href="{% url 'my_info' %}">회원 정보</a>
+
+
     {% for post in my_posts %}
 <div>
     <h2><a href="{% url 'post_detail' post_id=post.pk %}">{{ post.title }}</a></h2>

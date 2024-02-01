@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마이페이지_테스트결과</title>
+</head>
+<body>
+    <a href="{% url 'home' %}">홈</a>
+    <a href="{% url 'post_list' %}">최신 글</a>
+    <a href="{% url 'post_list2' %}">인기 글</a><br><br>
+
+    <p>마이페이지 메뉴</p>
+    <a href="{% url 'my_test' %}">테스트결과</a>
+    <a href="{% url 'my_posts' %}">내가 쓴 글</a>
+    <a href="{% url 'my_comments' %}">댓글 단 글</a>
+    <a href="{% url 'bookmarked_posts' %}">북마크</a>
+    <a href="{% url 'my_info' %}">회원 정보</a>
+
+    <h2>{{ current_user_nickname }}님의 여행 성향</h2>
+    
+            <p>{{ current_user_user_type }}형 여행자</p>
+            
+</body>
+</html>

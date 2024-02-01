@@ -85,26 +85,30 @@
 
         <!-- 나이 -->
         {% if  age >= 10 and age <= 19 %}
-            <p>10대</p>
+            10대 /
         {% elif age >= 20 and age <= 29 %}
-            <p>20대</p>
+            20대 /
         {% elif age >= 30 and age <= 39 %}
-            <p>30대</p>
+            30대 /
+        {% elif age >= 40 and age <= 49 %}
+            40대 /
+        {% elif age >= 50 and age <= 59 %}
+            50대 /
         {% else %}
-            <p>기타 연령대</p>
+            기타 연령대
         {% endif %}
 
         <!-- 성별 -->
-        <p>
-            {% if post.author.gender == 'M' %}
-                남
-            {% elif post.author.gender == 'F' %}
-                여
-            {% else %}
-                미지정
-            {% endif %}
-        </p>
+        
+        {% if post.author.gender == 'M' %}
+            남
+        {% elif post.author.gender == 'F' %}
+            여
+        {% else %}
+            미지정
+        {% endif %}
 
+        <br>
         <!-- 프로필 -->
         {% if post.author.profile_pic %}
             <img src="{{ post.author.profile_pic.url }}" alt="프로필 사진" width="100">

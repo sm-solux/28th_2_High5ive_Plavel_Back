@@ -7,12 +7,28 @@
     <a href="{% url 'home' %}">홈</a>
     <a href="{% url 'post_list' %}">최신 글</a>
     <a href="{% url 'post_list2' %}">인기 글</a><br><br>
-    <a href="{% url 'my_info' %}">마이페이지</a>
+    <a href="{% url 'my_test' %}">마이페이지</a>
     <a href="{% url 'logout' %}">로그아웃</a>
     <a href="{% url 'post_create' %}">✏️글 쓰기</a>
     <br><br>
     <h1>인기글</h1> 
 
+
+    <button onclick="filterPosts('Sun')">Sun</button>
+    <button onclick="filterPosts('Jupiter')">Jupiter</button>
+    <button onclick="filterPosts('Comet')">Comet</button>
+    <button onclick="filterPosts('Earth')">Earth</button>
+    <button onclick="filterPosts('Moon')">Moon</button>
+    <button onclick="filterPosts('Saturn')">Saturn</button>
+    <button onclick="filterPosts('White')">White Hole</button>
+    <button onclick="filterPosts('Black')">Black Hole</button>
+    <script>
+        
+    function filterPosts(userType) {
+        window.location.href = "{% url 'post_filter' %}?user_type=" + userType;
+    }
+    </script>
+    
     {% for post in posts %}
     <div>
         <h2><a href="{% url 'post_detail' post_id=post.pk %}">{{ post.title }}</a></h2>

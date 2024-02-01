@@ -7,11 +7,11 @@
     <a href="{% url 'home' %}">홈</a>
     <a href="{% url 'post_list' %}">최신 글</a>
     <a href="{% url 'post_list2' %}">인기 글</a><br><br>
-    <a href="{% url 'my_info' %}">마이페이지</a>
+    <a href="{% url 'my_test' %}">마이페이지</a>
     <a href="{% url 'logout' %}">로그아웃</a>
     <a href="{% url 'post_create' %}">✏️글 쓰기</a>
     <br><br>
-    <h2>{{ user_type }} 필터 적용중입니다.</h2>    
+    <h2>{{ user_type }} 필터 적용 중</h2>    
 
     <button onclick="filterPosts('Sun')">Sun</button>
     <button onclick="filterPosts('Jupiter')">Jupiter</button>

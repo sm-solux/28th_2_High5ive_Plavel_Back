@@ -3,10 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>마이페잊_북마크</title>
 </head>
 <body>
-    <p><a href="{% url 'home' %}">홈 가기</a></p>
+    <a href="{% url 'home' %}">홈</a>
+    <a href="{% url 'post_list' %}">최신 글</a>
+    <a href="{% url 'post_list2' %}">인기 글</a><br><br>
+
+    <p>마이페이지 메뉴</p>
+    <a href="{% url 'my_test' %}">테스트결과</a>
+    <a href="{% url 'my_posts' %}">내가 쓴 글</a>
+    <a href="{% url 'my_comments' %}">댓글 단 글</a>
+    <a href="{% url 'bookmarked_posts' %}">북마크</a>
+    <a href="{% url 'my_info' %}">회원 정보</a>
+
     <h2>북마크</h2>
     {% for post in bookmarks %}
     <div>
