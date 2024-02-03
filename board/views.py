@@ -195,8 +195,11 @@ def post_detail(request, post_id):
         context = {
             'post': PostSerializer(post).data,
             'age': age,
+            'gender': post.author.gender,
             'nickname': post.author.nickname,
             'usertype':post.author.user_type,
+            'bio':post.author.bio,
+            'profile_pic':post.author.profile_pic.url if post.author.profile_pic.url else None,
             'bookmarks_count': bookmarks_count,
             'current_user': UserSerializer(current_user).data,
         }
@@ -205,8 +208,11 @@ def post_detail(request, post_id):
         context = {
             'post': PostSerializer(post).data,
             'age': age,
+            'gender': post.author.gender,
             'nickname': post.author.nickname,
             'usertype':post.author.user_type,
+            'bio':post.author.bio,
+            'profile_pic':post.author.profile_pic.url if post.author.profile_pic.url else None,
             'bookmarks_count': bookmarks_count,
             'current_user': None,
         }
