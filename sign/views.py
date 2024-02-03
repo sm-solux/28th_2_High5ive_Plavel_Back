@@ -2,9 +2,12 @@ from django.shortcuts import render, redirect
 from django.contrib import auth, messages
 from django.contrib.auth import authenticate
 from .models import CustomUser
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 User = CustomUser
 
+@csrf_exempt
 def signup(request):
     if request.method=='POST':
         user_id = request.POST.get('user_id', '')
@@ -44,6 +47,7 @@ def signup(request):
     else:
         return render(request,'signup.html')
 
+@csrf_exempt
 def login(request):
     if request.method=='POST':
         user_id=request.POST.get('user_id')
@@ -58,7 +62,19 @@ def login(request):
     else:
         return render(request,'login.html')
 
+@csrf_exempt
 def logout(request):
     auth.logout(request)
     return redirect('/sign/login')
 
+
+# # 테스트 결과 받아오기
+# @csrf_exempt
+# def set_user_type(request):
+#     if request.method == 'POST':
+#         data = json.loads(request.body)
+#         user_type = data.get('user_type')
+#         # user_type을 사용하여 필요한 작업 수행...
+#         return JsonResponse({'status': 'success'}, status=200)
+#     else:
+#         return JsonResponse({'status': 'fail'}, status=400)
