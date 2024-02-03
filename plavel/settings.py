@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'board',
     'rest_framework',
     'corsheaders',
-    'mypage'
+    'mypage',
 ]
 
 REST_FRAMEWORK = {
@@ -55,6 +55,7 @@ REST_FRAMEWORK = {
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
