@@ -1,6 +1,7 @@
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+from django.contrib.auth.models import BaseUserManager
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, user_id, email, password, username, nickname, gender, birth_date, **extra_fields):
@@ -58,7 +59,7 @@ class CustomUser(AbstractUser):
     username = models.CharField(max_length=32, unique=True, verbose_name='이름')
     user_register_dttm = models.DateTimeField(auto_now_add=True, verbose_name='계정 생성시간')
     nickname = models.CharField(max_length=50, unique=True, verbose_name='닉네임')
-    birth_date = models.DateField(verbose_name='생년월일', null=True, blank=True)
+    birth_date = models.CharField(max_length=10, verbose_name='생년월일', null=True, blank=True)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     
     profile_pic = models.ImageField(upload_to='profile_pics/', null=True, blank=True, verbose_name='프로필 사진')

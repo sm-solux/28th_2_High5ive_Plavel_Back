@@ -7,17 +7,17 @@ User = CustomUser
 
 def signup(request):
     if request.method=='POST':
-        user_id = request.POST.get('id', '')
-        user_pw = request.POST.get('pwd', '')
-        user_pw2 = request.POST.get('pwd2', '')
-        user_email = request.POST.get('email', '')
-        user_name = request.POST.get('name', '')
-        user_nickname = request.POST.get('nickname', '')
-        user_gender = request.POST.get('gender', '')
-        user_profile_pic = request.FILES.get('profile_pic', None)
-        user_bio = request.POST.get('bio', '')
-        user_type = request.POST.get('user_type', '')
-        user_birth_date = request.POST.get('birth_date', '')
+        user_id = request.POST.get('user_id', '')
+        user_pw = request.POST.get('user_pw', '')
+        user_pw2 = request.POST.get('user_pw2', '')
+        user_email = request.POST.get('user_email', '')
+        user_name = request.POST.get('user_name', '')
+        user_nickname = request.POST.get('user_nickname', '')
+        user_gender = request.POST.get('user_gender', '')
+        user_profile_pic = request.FILES.get('user_profile_pic', None)
+        user_bio = request.POST.get('user_bio', '')
+        user_type = request.POST.get('user_user_type', '')
+        user_birth_date = request.POST.get('user_birth_date', '')
 
         if user_pw != user_pw2:
             messages.warning(request, "비밀번호가 다릅니다.")
@@ -46,8 +46,8 @@ def signup(request):
 
 def login(request):
     if request.method=='POST':
-        user_id=request.POST['id']
-        user_pw=request.POST['pwd']
+        user_id=request.POST.get('user_id')
+        user_pw=request.POST.get('user_pw')
         user=authenticate(request,user_id=user_id,password=user_pw)
         if user is not None:
             auth.login(request,user)
