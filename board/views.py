@@ -112,6 +112,7 @@ def post_to_dict(post):
         'content': post.content,
         'created_at': post.created_at,
         'updated_at': post.updated_at,
+        'usertype':post.author.user_type,
         'comments_count': post.comments_count,  # 댓글 수 추가
         'bookmark_count': post.bookmark_count,  # 북마크 수 추가
     }
@@ -194,6 +195,8 @@ def post_detail(request, post_id):
         context = {
             'post': PostSerializer(post).data,
             'age': age,
+            'nickname': post.author.nickname,
+            'usertype':post.author.user_type,
             'bookmarks_count': bookmarks_count,
             'current_user': UserSerializer(current_user).data,
         }
@@ -202,6 +205,8 @@ def post_detail(request, post_id):
         context = {
             'post': PostSerializer(post).data,
             'age': age,
+            'nickname': post.author.nickname,
+            'usertype':post.author.user_type,
             'bookmarks_count': bookmarks_count,
             'current_user': None,
         }
