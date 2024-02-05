@@ -19,10 +19,12 @@ class ArticleListSerializer(serializers.ModelSerializer):
     #current_user = serializers.SerializerMethodField()  # current_user 필드를 추가합니다.
     bookmark_count = serializers.IntegerField(read_only=True)  # 북마크 수 필드 추가
     comment_count = serializers.IntegerField(read_only=True)  # 댓글 수 필드 추가
+    author_nickname = serializers.CharField(source='author.nickname', read_only=True)  # 작성자 닉네임 필드 추가
+    author_type = serializers.CharField(source='author.user_type', read_only=True)  # 작성자 타입 필드 추가
 
     class Meta:
         model = Article
-        fields = ('id', 'title', 'content', 'bookmark_count', 'comment_count')
+        fields = ('id', 'title', 'content', 'bookmark_count', 'comment_count', 'author_nickname', 'author_type', 'created_at')
 
     # def get_current_user(self, obj):
     #     user = self.context['request'].user
