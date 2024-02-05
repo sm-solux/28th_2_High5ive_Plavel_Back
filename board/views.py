@@ -504,8 +504,10 @@ def article_list2(request):
 
 @api_view(['GET', 'DELETE', 'PUT'])
 def article_detail(request, article_pk):
+    article = get_object_or_404(Article.objects.annotate(bookmark_count=Count('bookmarked', distinct=True),comment_count=Count('comments', distinct=True)), pk=article_pk)
+
     # article = Article.objects.get(pk=article_pk)
-    article = get_object_or_404(Article, pk=article_pk)
+    #article = get_object_or_404(Article, pk=article_pk)
 
     if request.method == 'GET':
         serializer = ArticleSerializer(article)
