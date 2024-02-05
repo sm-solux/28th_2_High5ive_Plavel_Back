@@ -1,7 +1,7 @@
 # from django import urls
 # from django.urls import path
 
-# from . import views
+from . import views
 # from .views import login, signup
 
 # urlpatterns= [
@@ -14,10 +14,10 @@
 # ]
 
 from django.urls import path, include
-from .views import RegistrationAPI, LoginAPI, UserAPI
+from .views import LoginAPI, UserAPI
 
 urlpatterns = [
-    path("signup", RegistrationAPI.as_view()),
+    path('signup', views.signup, name="signup"),
     path("login", LoginAPI.as_view()),
     path("user", UserAPI.as_view()),
 ]
