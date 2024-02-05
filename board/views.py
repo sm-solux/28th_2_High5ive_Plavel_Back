@@ -107,13 +107,13 @@ from django.http import JsonResponse
 def post_to_dict(post):
     return {
         'id': post.id,
-        'author': post.author.username,
+        'author_nickname': post.author.username,
         'title': post.title,
         'content': post.content,
         'created_at': post.created_at,
         'updated_at': post.updated_at,
-        'usertype':post.author.user_type,
-        'comments_count': post.comments_count,  # 댓글 수 추가
+        'author_type':post.author.user_type,
+        'comment_count': post.comments_count,  # 댓글 수 추가
         'bookmark_count': post.bookmark_count,  # 북마크 수 추가
     }
 
