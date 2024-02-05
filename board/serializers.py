@@ -39,7 +39,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
 class ArticleSerializer(serializers.ModelSerializer):
     # comment_set = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
-    author = UserSerializer(allow_null=True)
+    # author = UserSerializer(allow_null=True)
     comment_set = CommentSerializer(many=True, read_only=True)
     bookmark_count = serializers.IntegerField(read_only=True)  # 북마크 수 필드 추가
     comment_count = serializers.IntegerField(read_only=True)  # 댓글 수 필드 추가

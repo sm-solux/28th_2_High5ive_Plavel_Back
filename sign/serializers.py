@@ -27,6 +27,12 @@ class CreateUserSerializer(serializers.ModelSerializer):
         return user
 
 
+class CustomUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['user_type']
+
+
 # 접속 유지중인지 확인
 class UserSerializer(serializers.ModelSerializer):
     class Meta:

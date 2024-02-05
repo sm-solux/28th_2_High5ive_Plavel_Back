@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from board.models import Post
+from sign.models import CustomUser
+from .models import MyPage
 from django.http import JsonResponse
 
 # Create your views here.
@@ -136,27 +138,38 @@ def my_comments(request):
 #     return JsonResponse({'my_comments': post_list}, safe=False)
 
 
-def my_test(request):
-# 현재 로그인한 사용자를 가져옵니다.
-    current_user = request.user
-    if current_user.is_authenticated:
-        # 로그인한 상태라면 현재 사용자의 정보를 가져옵니다.
-        user_info = {
-            'current_user_name': current_user.username,
-            'current_user_nickname': current_user.nickname,
-            'current_user_email': current_user.email,
-            'current_user_gender': current_user.gender,
-            'current_user_birth': current_user.birth_date,
-            'current_user_bio': current_user.bio,
-            'current_user_user_type': current_user.user_type,
-            'current_user_profile_pic': current_user.profile_pic.url if current_user.profile_pic else None,
-        }
-    else:
-        # 로그인하지 않은 상태라면 사용자 정보를 비워둡니다.
-        user_info = {
-            'current_user_nickname': None,
-            'current_user_profile_pic': None,
-            'current_user_user_type': None,
-        }
+# def my_test(request):
+# # 현재 로그인한 사용자를 가져옵니다.
+#     current_user = request.user
+#     if current_user.is_authenticated:
+#         # 로그인한 상태라면 현재 사용자의 정보를 가져옵니다.
+#         user_info = {
+#             'current_user_name': current_user.username,
+#             'current_user_nickname': current_user.nickname,
+#             'current_user_email': current_user.email,
+#             'current_user_gender': current_user.gender,
+#             'current_user_birth': current_user.birth_date,
+#             'current_user_bio': current_user.bio,
+#             'current_user_user_type': current_user.user_type,
+#             'current_user_profile_pic': current_user.profile_pic.url if current_user.profile_pic else None,
+#         }
+#     else:
+#         # 로그인하지 않은 상태라면 사용자 정보를 비워둡니다.
+#         user_info = {
+#             'current_user_nickname': None,
+#             'current_user_profile_pic': None,
+#             'current_user_user_type': None,
+#         }
 
-    return JsonResponse(user_info)
+#     return JsonResponse(user_info)
+
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
+
+@csrf_exempt
+def my_test(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        user_type = data.get('user_type')
+        return JsonResponse({'message': 'success', 'user_type':user_type})

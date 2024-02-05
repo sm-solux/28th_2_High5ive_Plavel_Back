@@ -59,7 +59,7 @@ class CustomUser(AbstractUser):
     user_pw = models.CharField(max_length=128, verbose_name='비밀번호')
     username = models.CharField(max_length=32, unique=True, verbose_name='이름')
     user_register_dttm = models.DateTimeField(auto_now_add=True, verbose_name='계정 생성시간')
-    nickname = models.CharField(max_length=50, unique=True, verbose_name='닉네임')
+    nickname = models.CharField(max_length=50, verbose_name='닉네임')
     birth_date = models.CharField(max_length=10, verbose_name='생년월일', null=True, blank=True)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     
