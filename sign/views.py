@@ -41,8 +41,8 @@ def signup(request):
         user_gender = data.get('user_gender', '')
         user_profile_pic = data.get('user_profile_pic', None)
         user_bio = data.get('user_bio', '')
-        #user_type = data.get('user_user_type', '')
-        user_type = data.get('user_type'),
+        user_type = data.get('user_user_type', '')
+        #user_type = data.get('user_type'),
         user_birth_date = data.get('user_birth_date', '')
 
         if user_pw != user_pw2:
