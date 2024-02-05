@@ -449,7 +449,7 @@ def article_list(request):
 
     if request.method == 'GET':
         # articles = Article.objects.all()
-        articles = get_list_or_404(Article.objects.annotate(bookmark_count=Count('bookmarked'),comment_count=Count('comments')).order_by('-created_at'))
+        articles = get_list_or_404(Article.objects.annotate(bookmark_count=Count('bookmarked', distinct=True),comment_count=Count('comments', distinct=True)).order_by('-created_at'))
         serializer = ArticleListSerializer(articles, context={'request': request}, many=True)
         data = {
             'articles': serializer.data,
@@ -485,7 +485,7 @@ def article_list2(request):
 
     if request.method == 'GET':
         # articles = Article.objects.all()
-        articles = get_list_or_404(Article.objects.annotate(bookmark_count=Count('bookmarked'),comment_count=Count('comments')).order_by('-bookmark_count'))
+        articles = get_list_or_404(Article.objects.annotate(bookmark_count=Count('bookmarked', distinct=True),comment_count=Count('comments', distinct=True)).order_by('-bookmark_count'))
         serializer = ArticleListSerializer(articles, context={'request': request}, many=True)
         data = {
             'articles': serializer.data,
@@ -502,7 +502,6 @@ def article_list2(request):
 
 
 
-@login_required
 @api_view(['GET', 'DELETE', 'PUT'])
 def article_detail(request, article_pk):
     # article = Article.objects.get(pk=article_pk)

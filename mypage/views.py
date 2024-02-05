@@ -45,7 +45,7 @@ from django.http import JsonResponse
 
 
 # 회원 정보
-@login_required
+#@login_required
 def my_info(request):
     # 현재 로그인한 사용자를 가져옵니다.
     current_user = request.user
@@ -72,7 +72,7 @@ def my_info(request):
     return JsonResponse(user_info)
 
 #내가 쓴 글
-@login_required
+#@login_required
 def my_posts(request):
     user = request.user
     my_posts = user.post_set.all().annotate(bookmark_count=Count('bookmarked'),comments_count=Count('comments'))
@@ -95,7 +95,7 @@ def my_posts(request):
 
 
 #댓글 단 글
-@login_required
+#@login_required
 def my_comments(request):
     user = request.user
     my_comments = user.comment_set.all()
