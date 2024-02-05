@@ -21,9 +21,11 @@ from sign.views import login
 from django.conf import settings
 from django.conf.urls.static import static
 from . import view
+from sign.views import login
 
 urlpatterns = [
     path('', login, name='login'),
+    #path('login', login.as_view()),
     path('admin/', admin.site.urls),
     path('sign/', include('sign.urls')),
     path('board/', include('board.urls')),

@@ -42,15 +42,20 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'board',
+    'plavel',
     'rest_framework',
     'corsheaders',
+    'knox',
     'mypage',
 ]
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
+    ],
+    "DEFAULT_AUTHENTICATION_CLASSES": ("knox.auth.TokenAuthentication",),
 }
 
 MIDDLEWARE = [

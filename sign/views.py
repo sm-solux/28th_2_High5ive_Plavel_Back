@@ -7,6 +7,13 @@ from django.views.decorators.csrf import csrf_exempt
 
 import json
 
+from rest_framework import viewsets, permissions, generics, status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework.decorators import api_view
+from knox.models import AuthToken
+from .serializers import UserSerializer, LoginUserSerializer, CreateUserSerializer
+
 User = CustomUser
 
 @csrf_exempt
@@ -106,13 +113,57 @@ def login(request):
         user = authenticate(request, username=user_id, password=user_pw)
         if user is not None:
             auth_login(request, user)
-            return JsonResponse({"message": "Login Successful"})
+            self.request.session['user_id'] = user_id
+            login(self.request, user)
+            remember_session = self.request.POST.get('remember_session', False)
+            if remember_session:
+                settings.SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+            token = AuthToken.objects.create(user)[1]
+            return JsonResponse({"message": "Login Successful", "token": token})
         else:
             return JsonResponse({"message": "Check your ID and password"}, status=400)
     else:
         return JsonResponse({"message": "Invalid HTTP method"}, status=400)
+    
+    
 
 
+# class signup(APIView):
+#     serializer_class = CreateUserSerializer
+
+#     def post(self, request, *args, **kwargs):
+#         if len(request.data["username"]) < 6 or len(request.data["password"]) < 4:
+#             body = {"message": "short field"}
+#             return Response(body, status=status.HTTP_400_BAD_REQUEST)
+#         serializer = self.get_serializer(data=request.data)
+#         serializer.is_valid(raise_exception=True)
+#         user = serializer.save()
+#         return Response(
+#             {
+#                 "user": UserSerializer(
+#                     user, context=self.get_serializer_context()
+#                 ).data,
+#                 "token": AuthToken.objects.create(user),
+#             }
+#         )
+
+
+# class login(APIView):
+#     serializer_class = LoginUserSerializer
+
+#     def post(self, request, *args, **kwargs):
+#         serializer = self.get_serializer(data=request.data)
+#         serializer.is_valid(raise_exception=True)
+#         user = serializer.validated_data
+#         return Response(
+#             {
+#                 "user": UserSerializer(
+#                     user, context=self.get_serializer_context()
+#                 ).data,
+#                 "token": AuthToken.objects.create(user)[1],
+#             }
+#         )
+    
 @csrf_exempt
 def logout(request):
     auth.logout(request)

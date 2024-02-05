@@ -42,20 +42,10 @@ from django.http import JsonResponse
 #     return render(request, 'my_posts.html', {'my_posts': my_posts})
 
 
-# #댓글 단 글
-# @login_required
-# def my_comments(request):
-#     user = request.user
-#     my_comments = user.comment_set.all()
-#     commented_posts = {comment.post for comment in my_comments}
 
-#     # 북마크 카운트를 계산합니다.
-#     for post in commented_posts:
-#         post.bookmarks_count = post.bookmarked.count()
-#     commented_posts = {comment.post for comment in my_comments}
-#     return render(request, 'my_comments.html', {'commented_posts': commented_posts})
 
 # 회원 정보
+@login_required
 def my_info(request):
     # 현재 로그인한 사용자를 가져옵니다.
     current_user = request.user
@@ -103,37 +93,50 @@ def my_posts(request):
 
     return JsonResponse({'my_posts': post_list}, safe=False)
 
+
 #댓글 단 글
 @login_required
 def my_comments(request):
     user = request.user
-    my_comments = user.comment_set.all().annotate(bookmark_count=Count('bookmarked'),comments_count=Count('comments'))
+    my_comments = user.comment_set.all()
     commented_posts = {comment.post for comment in my_comments}
 
     # 북마크 카운트를 계산합니다.
     for post in commented_posts:
         post.bookmarks_count = post.bookmarked.count()
+    commented_posts = {comment.post for comment in my_comments}
+    #return render(request, 'my_comments.html', {'commented_posts': commented_posts})
+    return JsonResponse({'my_comments': commented_posts}, safe=False)
 
-    post_list = []
-    for post in commented_posts:
-        post_dict = {
-            'id': post.id,
-            'author': post.author.nickname,
-            'title': post.title,
-            'content': post.content,
-            'created_at': post.created_at,
-            'updated_at': post.updated_at,
-            'bookmark_count': post.bookmarks_count,
-            'comments_count':post.comments_count,
-        }
-        post_list.append(post_dict)
 
-    return JsonResponse({'commented_posts': post_list}, safe=False)
+# @login_required
+# def my_comments(request):
+#     user = request.user
+#     my_comments = user.comment_set.all()
+#     commented_posts = {comment.post for comment in my_comments}
 
+#     for post in commented_posts:
+#         post.bookmarks_count = post.bookmarked.count()
+#     commented_posts = {comment.post for comment in my_comments}
+
+#     post_list = []
+#     for post in commented_posts:
+#         post_dict = {
+#             'id': post.id,
+#             'author': post.author.nickname,
+#             'title': post.title,
+#             'content': post.content,
+#             'created_at': post.created_at,
+#             'updated_at': post.updated_at,
+#             'bookmark_count': post.bookmark_count,
+#             'comments_count':post.comments_count,
+#         }
+#         post_list.append(post_dict)
+
+#     return JsonResponse({'my_comments': post_list}, safe=False)
 
 
 def my_test(request):
-
 # 현재 로그인한 사용자를 가져옵니다.
     current_user = request.user
     if current_user.is_authenticated:
