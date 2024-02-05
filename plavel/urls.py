@@ -17,19 +17,19 @@ Including another URLconf
 from django.contrib import admin
 from django import urls
 from django.urls import path, include
-from sign.views import login
 from django.conf import settings
 from django.conf.urls.static import static
 from . import view
-from sign.views import login
+#from sign.views import LoginAPI
 
 urlpatterns = [
-    path('', login, name='login'),
-    #path('login', login.as_view()),
+    #path('', login, name='login'),
+    #path("login", LoginAPI.as_view()),
     path('admin/', admin.site.urls),
     path('sign/', include('sign.urls')),
     path('board/', include('board.urls')),
     path('mypage/', include('mypage.urls')),
+    path('api/', include("api.urls"))
 ]
 
 if settings.DEBUG:
