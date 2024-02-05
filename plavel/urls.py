@@ -29,7 +29,8 @@ urlpatterns = [
     path('sign/', include('sign.urls')),
     path('board/', include('board.urls')),
     path('mypage/', include('mypage.urls')),
-    path('api/', include("api.urls"))
+    #path('api/', include("api.urls")),
+    path('api/auth/', include('knox.urls')),
 ]
 
 if settings.DEBUG:

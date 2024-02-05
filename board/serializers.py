@@ -8,7 +8,7 @@ User = CustomUser
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['username', 'email', 'profile_pic', 'user_type'] 
+        fields = ['user_nickname', 'user_bio', 'profile_pic', 'user_type', 'user_gender', 'birth_date'] 
 
 from rest_framework import serializers
 from .models import Post, Comment
@@ -17,6 +17,7 @@ Article = Post
 
 class ArticleListSerializer(serializers.ModelSerializer):
 
+    
     class Meta:
         model = Article
         fields = ('id', 'title', 'content')
