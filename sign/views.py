@@ -113,17 +113,15 @@ def login(request):
         user = authenticate(request, username=user_id, password=user_pw)
         if user is not None:
             auth_login(request, user)
-            self.request.session['user_id'] = user_id
-            login(self.request, user)
-            remember_session = self.request.POST.get('remember_session', False)
-            if remember_session:
-                settings.SESSION_EXPIRE_AT_BROWSER_CLOSE = False
             token = AuthToken.objects.create(user)[1]
             return JsonResponse({"message": "Login Successful", "token": token})
         else:
             return JsonResponse({"message": "Check your ID and password"}, status=400)
     else:
         return JsonResponse({"message": "Invalid HTTP method"}, status=400)
+    
+
+    
     
     
 
