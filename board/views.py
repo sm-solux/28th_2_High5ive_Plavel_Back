@@ -449,7 +449,7 @@ def article_list(request):
 
     if request.method == 'GET':
         # articles = Article.objects.all()
-        articles = get_list_or_404(Article)
+        articles = get_list_or_404(Article.objects.annotate(bookmark_count=Count('bookmarked'),comment_count=Count('comments')).order_by('-created_at'))
         serializer = ArticleListSerializer(articles, context={'request': request}, many=True)
         data = {
             'articles': serializer.data,
@@ -552,14 +552,11 @@ def comment_detail(request, comment_pk):
             return Response(serializer.data)
 
 
-
-
-
 @api_view(['POST'])
-def comment_create(request, article_pk):
+def comment_create(request, post_pk):
     # article = Article.objects.get(pk=article_pk)
-    article = get_object_or_404(Article, pk=article_pk)
+    post = get_object_or_404(Article, pk=post_pk)
     serializer = CommentSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
-        serializer.save(article=article)
+        serializer.save(post=post)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
