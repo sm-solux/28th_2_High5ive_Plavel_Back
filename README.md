@@ -5,4 +5,4 @@
 | Name          | 김경은 | 
 | ------------- | :---------------------------------: | 
 | Role |Developer| 
-| Profile | ![20754cbfb238872d-sticker 1](https://github.com/sm-solux/28th_2_High5ive_Plavel_Back/assets/102468718/bbb4cf4e-3a5e-451c-a2db-9c3371aeb3bd) |
+| Profile | <img src="https://github.com/sm-solux/28th_2_High5ive_Plavel_Back/assets/102468718/bbb4cf4e-3a5e-451c-a2db-9c3371aeb3bd"  width="200"/> |
